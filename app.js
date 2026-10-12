@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { GLYPH } from './icons.js';
 
 // ---------- helpers ----------
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
@@ -70,7 +71,7 @@ function buildCrowd(el, cast, night) {
     d.className = 'peep' + (s.back ? ' back' : '') + (c.bob ? ' bob' : '');
     const h = s.h * (c.seat ? (c.seat === 1 ? .72 : c.seat * .72) : 1);
     d.style.cssText = `--x:${s.x};--b:${s.b};--h:${h};--ar:${AR[c.k]};--flip:${c.flip || 1};z-index:${s.back ? 1 : 3}`;
-    d.innerHTML = `<img src="assets/peeps/${c.k}.svg" alt="" draggable="false">`;
+    d.innerHTML = `<img src="assets/peeps/${c.k}${night ? '' : '-pine'}.svg" alt="" draggable="false">`;
     if (night) {
       d.innerHTML += `<span class="face-glow" style="--px:${c.px};--py:${c.py}"></span><span class="phone" style="--px:${c.px};--py:${c.py};--pr:${c.pr};animation-delay:${-i * .37}s"></span>`;
     }
@@ -81,38 +82,63 @@ function buildCrowd(el, cast, night) {
 buildCrowd($('crowd-night'), NIGHT, true);
 buildCrowd($('crowd-dawn'), DAWN, false);
 const phones = [...document.querySelectorAll('.night .phone, .night .face-glow')];
+// wave order by x position (left to right)
+const ORDER = SLOTS.map((s, i) => [s.x, i]).sort((u, v) => u[0] - v[0]).reduce((o, [, i], r) => (o[i] = r, o), []);
 
-// ---------- notification badges ----------
-const APPS = [
-  { ico: '♥', bg: 'linear-gradient(45deg,#f9a03f,#e1306c,#833ab4)', t: 'new likes' },
-  { ico: '▶', bg: '#ff0033', t: 'Shorts for you' },
-  { ico: '✉', bg: '#25d366', t: 'messages' },
-  { ico: '●', bg: '#111', t: 'new posts' },
-  { ico: '★', bg: '#ffb800', t: 'streak at risk' },
-  { ico: '♪', bg: '#000', t: 'trending sound' },
+// ---------- notifications (Android heads-up style, dark theme) ----------
+// Real apps, real-sounding copy. Logos: Simple Icons (CC0); trademarks belong to their owners.
+const APP = {
+  instagram: { name: 'Instagram', bg: 'radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%)', fg: '#fff' },
+  whatsapp:  { name: 'WhatsApp',  bg: '#25D366', fg: '#fff' },
+  youtube:   { name: 'YouTube',   bg: '#fff', fg: '#FF0000' },
+  snapchat:  { name: 'Snapchat',  bg: '#FFFC00', fg: '#fff', stroke: '#000' },
+  zomato:    { name: 'Zomato',    bg: '#E23744', fg: '#fff' },
+  swiggy:    { name: 'Swiggy',    bg: '#FC8019', fg: '#fff' },
+};
+const NOTES = [
+  ['instagram', 'rahul.verma_', 'liked your reel ❤️'],
+  ['whatsapp',  'Family 🏠', 'Mummy: Khana kha liya? Kab tak phone chalaoge'],
+  ['instagram', 'priya.s and 23 others', 'liked your post'],
+  ['youtube',   'Shorts for you', 'Ye dekh ke hassi nahi rukegi 😂 · 1.2M views'],
+  ['whatsapp',  'College Gang', 'Rohit: bhai ye reel dekh 😂😂 (14 messages)'],
+  ['snapchat',  'Riya', '🔥 Your Snapstreak is about to end!'],
+  ['instagram', '_aanya.k_', 'started a live video. Watch now'],
+  ['zomato',    'Midnight cravings? 🍕', 'Flat 50% off. Order in 2 taps'],
+  ['whatsapp',  'Office Team', 'Boss: Are you up? Quick call kal subah'],
+  ['youtube',   'Recommended', 'Top 10 moments you missed this week'],
+  ['swiggy',    'Instamart 🛒', 'Chips & cold drink in 10 minutes'],
+  ['instagram', 'karan.dev', 'sent you a reel'],
 ];
+const icon = (k, cls = 'ai') => {
+  const a = APP[k];
+  return `<span class="${cls}" style="background:${a.bg}"><svg viewBox="0 0 24 24"><path d="${GLYPH[k]}" fill="${a.fg}"${a.stroke ? ` stroke="${a.stroke}" stroke-width="1.2"` : ''}/></svg></span>`;
+};
+// fixed landing spots so cards never pile on the device or each other: [left%, top%, tilt]
+const SPOTS_TALL = [['L', 22, -2], ['R', 27, 2], ['L', 55, 1.5], ['R', 59, -1.5], ['R', 41, -1], ['L', 37, 1]];
+const SPOTS_WIDE = [['L', 26, -2], ['R', 22, 2], ['L', 44, 1.5], ['R', 42, -1.5], ['L', 62, -1], ['R', 61, 1], [' 4', 34, 0], [' 72', 52, 0]];
 const badgesEl = $('badges');
-let badgeTimer = 0, badgesOn = true;
+let badgeTimer = 0, badgesOn = true, noteI = 0;
+const taken = new Set();
 function spawnBadge() {
-  if (!badgesOn || badgesEl.childElementCount > 9) return;
+  if (!badgesOn) return;
+  const spots = innerWidth > innerHeight ? SPOTS_WIDE : SPOTS_TALL;
+  const cap = Math.round(lerp(2, spots.length, seg(prog, 0, .2)));
+  const free = spots.map((_, i) => i).filter(i => i < cap && !taken.has(i));
+  if (!free.length) return;
+  const si = free[(Math.random() * free.length) | 0];
+  const [x, y, r] = spots[si];
+  const [k, title, body] = NOTES[noteI++ % NOTES.length];
   const b = document.createElement('div');
-  const reel = Math.random() < .28;
-  // keep clear of the device (centre) and captions (top)
-  const side = Math.random() < .5;
-  const x = side ? 3 + Math.random() * 26 : 62 + Math.random() * 26;
-  const y = 24 + Math.random() * 34;
-  b.style.left = x + '%'; b.style.top = y + '%';
-  if (reel) b.className = 'badge reel';
-  else {
-    const a = APPS[(Math.random() * APPS.length) | 0];
-    const n = [3, 7, 12, 24, 47, 99, '99+'][(Math.random() * 7) | 0];
-    b.className = 'badge';
-    b.innerHTML = `<span class="ico" style="background:${a.bg}">${a.ico}</span><span class="n">${n}</span>`;
-  }
+  b.className = 'note';
+  if (x === 'L') b.style.left = '3%'; else if (x === 'R') b.style.right = '3%'; else b.style.left = x.trim() + '%';
+  b.style.top = y + '%'; b.style.setProperty('--r', r + 'deg');
+  b.innerHTML = `<div class="nh">${icon(k, 'ai sm')}<span class="app">${APP[k].name}</span><span class="dot">·</span><span class="when">now</span></div>
+    <div class="nb"><div class="tx"><b>${title}</b><span>${body}</span></div></div>`;
+  taken.add(si);
   badgesEl.appendChild(b);
-  setTimeout(() => { b.classList.add('out'); setTimeout(() => b.remove(), 400); }, 2600 + Math.random() * 1800);
+  setTimeout(() => { b.classList.add('out'); setTimeout(() => { b.remove(); taken.delete(si); }, 400); }, 2800 + Math.random() * 1600);
 }
-function burstBadges() { [...badgesEl.children].forEach((b, i) => setTimeout(() => b.classList.add('out'), i * 40)); }
+function burstBadges() { [...badgesEl.children].forEach((b, i) => setTimeout(() => b.classList.add('suck'), i * 60)); }
 
 // ---------- three.js device ----------
 const canvas = $('device');
@@ -147,7 +173,7 @@ new GLTFLoader().setDRACOLoader(draco).load('assets/pact.glb', g => {
   m.position.sub(box.getCenter(new THREE.Vector3()));
   m.traverse(o => {
     if (!o.isMesh) return;
-    o.material.envMapIntensity = .9;
+    o.material.envMapIntensity = .55;
     if (/foil/.test(o.name) || /foil/.test(o.material.name)) {      // foil sits on the stamp top: avoid z-fighting
       o.material.polygonOffset = true; o.material.polygonOffsetFactor = -2; o.material.polygonOffsetUnits = -2;
     }
@@ -184,7 +210,7 @@ function readScroll() {
 addEventListener('scroll', readScroll, { passive: true }); readScroll();
 
 // ---------- frame ----------
-const cap1 = $('cap1'), cap2 = $('cap2'), cap3 = $('cap3'), hint = $('hint'), dawn = $('dawn');
+const bar = $('bar'), cap1 = $('cap1'), cap2 = $('cap2'), cap3 = $('cap3'), hint = $('hint'), dawn = $('dawn');
 const rings = [...$('ripple').children];
 const meta = document.querySelector('meta[name=theme-color]');
 const clock = new THREE.Clock();
@@ -205,12 +231,12 @@ function frame() {
   // badges
   badgesOn = p < .22;
   if (p >= .26 && !burst) { burst = true; burstBadges(); }
-  if (p < .2) burst = false;
-  if (badgesOn && t - badgeTimer > (reduce ? 1.6 : .55)) { badgeTimer = t; spawnBadge(); }
+  if (p < .2) { burst = false; } else if (burst) taken.clear();
+  if (badgesOn && t - badgeTimer > (reduce ? 1.6 : .7)) { badgeTimer = t; spawnBadge(); }
 
   // phones dim one by one during the turn
   phones.forEach((ph, i) => {
-    const k = seg(p, .24 + (i >> 1) * .025, .3 + (i >> 1) * .025);
+    const k = seg(p, .52 + ORDER[i >> 1] * .008, .55 + ORDER[i >> 1] * .008);
     ph.style.opacity = 1 - k;
   });
 
@@ -228,8 +254,12 @@ function frame() {
   // dawn wipe from the device
   dawn.style.clipPath = `circle(${wipe * 150}% at 50% 40%)`;
   meta.content = wipe > .5 ? '#f6ead9' : '#0b1020';
+  const day = wipe > .35;
+  bar.style.setProperty('--bar-fg', day ? '#3F4021' : '#e9ecff');
+  bar.style.setProperty('--bar-btn-bg', day ? '#3F4021' : '#F2F0EA');
+  bar.style.setProperty('--bar-btn-fg', day ? '#F2F0EA' : '#0b1020');
   document.querySelectorAll('.dawn .peep').forEach((el, i) => {
-    const k = ease(seg(p, .62 + i * .015, .8 + i * .015));
+    const k = ease(seg(p, .68 + i * .012, .82 + i * .012));
     el.style.opacity = (el.classList.contains('back') ? .75 : 1) * k;
     el.style.translate = `0 ${(1 - k) * 20}px`;
   });
@@ -243,40 +273,42 @@ function frame() {
 
   // device
   if (ready) {
+    const wide = camera.aspect > 1;
     const idle = reduce ? 0 : t;
     // act 1: diagonal, slow drift
     let rx = -0.85 + Math.sin(idle * .6) * .06;
     let ry = 0.55 + Math.sin(idle * .4) * .18;
     let rz = 0.55;
     // turn: one full spin, ending face-on with a slight tilt
-    ry = lerp(ry, Math.PI * 2 + .12, turn);
-    rx = lerp(rx, -0.18, turn);
+    ry = lerp(ry, Math.PI * 2 + .42, turn);
+    rx = lerp(rx, -0.36, turn);
     rz = lerp(rz, -0.06, turn);
     // after dawn: small idle float, slightly tipped
-    rx = lerp(rx, -0.42 + Math.sin(idle * .8) * .04, settle);
-    ry = lerp(ry, Math.PI * 2 + .35 + Math.sin(idle * .5) * .12, settle);
+    rx = lerp(rx, -0.45 + Math.sin(idle * .8) * .04, settle);
+    ry = lerp(ry, Math.PI * 2 + .45 + Math.sin(idle * .5) * .1, settle);
     pivot.rotation.set(rx, ry, rz);
 
     // tap: press in, then bounce back
     const press = Math.sin(clamp(tap) * Math.PI);
-    const s = 1 - press * .12 - settle * (camera.aspect > 1 ? .48 : .3);
+    const s = (wide ? .7 : 1) - press * .12 - settle * (wide ? .15 : .3);
     pivot.scale.setScalar(s);
     // position: 40% down the screen, then lift towards the headline area
-    const yf = lerp(.42, .40, turn);
-    const yfDawn = camera.aspect > 1 ? .49 : .445;
+    const yf = wide ? lerp(.42, .42, turn) : lerp(.43, .41, turn);
+    const yfDawn = wide ? .53 : .445;
     pivot.position.y = screenY(lerp(yf, yfDawn, settle)) + Math.sin(idle * 1.1) * 1.2;
     pivot.position.z = -press * 20;
+    pivot.position.x = tap > 0 && tap < 1 ? Math.sin(t * 90) * press * 1.6 : 0;
 
     // light: cold night -> warm dawn
     const L = wipe;
     hemi.color.copy(NIGHT_C.hemi).lerp(DAWN_C.hemi, L);
     key.color.copy(NIGHT_C.key).lerp(DAWN_C.key, L);
     rim.color.copy(NIGHT_C.rim).lerp(DAWN_C.rim, L);
-    hemi.intensity = lerp(.6, 1.6, L);
-    key.intensity = lerp(1.2, 2.4, L);
+    hemi.intensity = lerp(.45, 1.0, L);
+    key.intensity = lerp(.9, 1.6, L);
     rim.intensity = lerp(2.4, .8, L);
     glow.intensity = lerp(0, 0, L) + press * 2600;
-    renderer.toneMappingExposure = lerp(.95, 1.1, L);
+    renderer.toneMappingExposure = lerp(.82, .9, L);
   }
   // keep ripple + dawn centre on the device
   renderer.render(scene, camera);
