@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Why Pauzie — D: Distance</title>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap">
+<style>
+  :root { --black: #181818; --grey: #5d5d5d; --beige: #f5f0ec; --red: #d6452e; --pine: #3F4021; --line: #ddd5cc; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #fff; color: var(--black); font-family: Switzer, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
+  .note { padding: 16px 20px; font: 600 16px/1.4 Switzer, sans-serif; background: var(--black); color: #fff; text-align: center; }
+  .note a { color: inherit; }
+  .pad { height: 40vh; display: grid; place-items: center; color: #aaa; font: 600 16px Switzer; }
+
+  .why { padding: 72px 20px 88px; text-align: center; }
+  .why h2 { font: 500 clamp(36px, 8.6vw, 72px)/1.02 Switzer, sans-serif; letter-spacing: -.035em; text-wrap: balance; max-width: 16ch; margin: 0 auto; }
+  .why .big { margin: 14px auto 0; font: 700 clamp(22px, 4.6vw, 34px)/1.2 Switzer, sans-serif; letter-spacing: -.02em; color: var(--red); text-wrap: balance; }
+
+  /* the ruler: everything that unlocks your apps, by distance from your hand */
+  .ruler { position: relative; max-width: 980px; margin: 44px auto 0; padding: 0 4px; }
+  .rail { position: relative; height: 230px; }
+  .rail::before { content: ""; position: absolute; left: 34px; right: 30px; top: 150px; height: 4px; border-radius: 4px; background: var(--line); }
+  .ticks { position: absolute; left: 34px; right: 30px; top: 164px; display: flex; justify-content: space-between; font: 700 clamp(14px, 1.3vw, 16px)/1 Switzer; color: #9a948c; }
+  .hand { position: absolute; left: 0; top: 104px; width: 68px; height: 96px; border-radius: 16px; background: var(--black); display: grid; place-items: center; }
+  .hand::after { content: ""; width: 52px; height: 80px; border-radius: 10px; background: #2c2c2c; }
+  .hand-l { position: absolute; left: 0; top: 214px; width: 68px; text-align: center; font: 700 15px/1.2 Switzer; color: var(--grey); }
+
+  .keys { position: absolute; left: 80px; top: 0; display: flex; flex-direction: column; gap: 8px; align-items: flex-start; text-align: left; }
+  .key { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 12px; background: #fff1ee; border: 2px solid #f3c9bf; font: 700 clamp(16px, 1.5vw, 19px)/1.1 Switzer; white-space: nowrap; }
+  .key small { font: 700 clamp(14px, 1.3vw, 16px)/1 Switzer; color: var(--red); }
+
+  .puck { position: absolute; top: 96px; left: calc(34px + var(--d, 0) * (100% - 34px - 130px)); width: 130px; text-align: center; transition: left .05s linear; }
+  .puck img { width: 110px; margin: 0 auto; display: block; filter: drop-shadow(0 10px 12px rgba(0,0,0,.18)); }
+  .puck i { display: block; margin-top: 3px; font: 700 clamp(14px, 1.3vw, 16px)/1.1 Switzer; font-style: normal; color: var(--grey); white-space: nowrap; opacity: var(--d, 0); }
+  .puck b { display: block; margin-top: 6px; font: 700 clamp(16px, 1.5vw, 19px)/1.1 Switzer; color: var(--pine); white-space: nowrap; }
+  .steps { position: absolute; left: 34px; top: 142px; height: 20px; width: calc(var(--d, 0) * (100% - 64px - 55px)); overflow: hidden;
+    background: radial-gradient(circle, var(--pine) 3.5px, transparent 4px) 0 50% / 22px 20px repeat-x; }
+
+  .count { margin-top: 26px; display: flex; justify-content: center; gap: clamp(18px, 6vw, 70px); flex-wrap: wrap; }
+  .count div { min-width: 140px; }
+  .count strong { display: block; font: 600 clamp(44px, 9vw, 76px)/1 Switzer; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+  .count span { display: block; margin-top: 6px; font: 700 clamp(16px, 1.5vw, 19px)/1.3 Switzer; color: var(--grey); }
+  .count .them strong { color: var(--red); }
+  .count .us strong { color: var(--pine); }
+
+  .close { margin: 40px auto 0; max-width: 24ch; font: 600 clamp(28px, 6vw, 46px)/1.1 Switzer; letter-spacing: -.03em; text-wrap: balance; }
+  .close + p { margin: 12px auto 0; max-width: 40ch; font: 700 clamp(17px, 1.6vw, 20px)/1.45 Switzer; color: var(--grey); text-wrap: balance; }
+
+  @media (max-width: 640px) {
+    .rail { height: 250px; }
+    .rail::before { top: 178px; } .ticks { top: 192px; }
+    .hand { top: 134px; width: 54px; height: 78px; border-radius: 13px; } .hand::after { width: 40px; height: 62px; }
+    .hand-l { top: 220px; width: 54px; font-size: 14px; }
+    .keys { left: 0; right: 0; flex-direction: row; flex-wrap: wrap; justify-content: center; }
+    .key { padding: 8px 11px; }
+    .puck { top: 126px; width: 120px; left: calc(30px + var(--d, 0) * (100% - 30px - 120px)); } .puck img { width: 84px; }
+    .steps { top: 170px; }
+  }
+</style>
+</head>
+<body>
+<p class="note"><a href="why-a.html">A</a> · <a href="why-b.html">B</a> · <a href="why-c.html">C</a> · Mock D · Distance (simple)</p>
+<div class="pad">… rest of the page above …</div>
+
+<section class="why" id="why">
+  <h2>Every app blocker has the same weak spot.</h2>
+  <p class="big">The unlock button is in your hand.</p>
+
+  <div class="ruler" id="ruler">
+    <div class="rail">
+      <div class="keys">
+        <span class="key">“Ignore limit” <small>0 steps</small></span>
+        <span class="key">Reinstall the app <small>0 steps</small></span>
+        <span class="key">Turn colour back on <small>0 steps</small></span>
+      </div>
+      <div class="hand" aria-hidden="true"></div>
+      <p class="hand-l">Your hand</p>
+      <div class="steps" aria-hidden="true"></div>
+      <div class="puck"><img src="assets/why/key.webp" alt="Pauzie Device"><b>Pauzie</b><i>in the other room</i></div>
+    </div>
+  </div>
+
+  <div class="count">
+    <div class="them"><strong>0</strong><span>steps to unlock<br>with other blockers</span></div>
+    <div class="us"><strong id="n">0</strong><span>steps to unlock<br>with Pauzie</span></div>
+  </div>
+
+  <p class="close">Most urges don't survive the walk.</p>
+  <p>Decide once, then put the way back out of reach. Psychologists call it a Ulysses contract. We call it Pauzie.</p>
+</section>
+
+<div class="pad">… rest of the page below …</div>
+
+<script>
+(() => {
+  const ruler = document.getElementById('ruler'), n = document.getElementById('n'), STEPS = 20;
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const ease = t => 1 - Math.pow(1 - t, 3);
+  function frame() {
+    const r = ruler.getBoundingClientRect();
+    // starts moving when the ruler enters the lower part of the screen, done by the time it reaches the upper third
+    const d = ease(clamp((innerHeight * .85 - r.top) / (innerHeight * .5)));
+    ruler.style.setProperty('--d', d);
+    n.textContent = Math.round(d * STEPS);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
