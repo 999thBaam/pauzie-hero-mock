@@ -92,7 +92,7 @@ function layout() {
   renderer.setSize(W, H, false);
   camera.aspect = W / H; camera.updateProjectionMatrix();
   const tf = Math.tan(THREE.MathUtils.degToRad(15)) * 2;
-  const frac = wide ? .3 : .42;                                 // device ≈ 42% of phone width, 30% of desktop height
+  const frac = wide ? .4 : .56;                                 // device ≈ 56% of phone width, 40% of desktop height
   camera.position.z = wide ? 64 / (frac * tf) : 64 / (frac * tf * camera.aspect);
 }
 addEventListener('resize', layout);
