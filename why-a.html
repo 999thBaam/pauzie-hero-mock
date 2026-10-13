@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Why Pauzie — A: Odyssey</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --clay: #c8682c; --ink: #17110c; --cream: #F2E6D2; --gold: #F4CE8F; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--ink); color: var(--cream); font-family: Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  .note { padding: 18px 20px; font: 700 16px/1.4 Inter, sans-serif; background: #2a1d14; color: var(--gold); text-align: center; }
+  .note a { color: inherit; }
+  .intro { padding: 96px 22px 40px; text-align: center; }
+  .kicker { font: 700 clamp(16px, 1.4vw, 19px)/1 Inter; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  h2 { font: 600 clamp(36px, 9vw, 72px)/1.04 Fraunces, Georgia, serif; letter-spacing: -.025em; text-wrap: balance; }
+
+  .od { height: 520vh; position: relative; }
+  .od-stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: flex; flex-direction: column; justify-content: center; gap: clamp(18px, 3svh, 32px); }
+  .od-track { display: flex; gap: 0; will-change: transform; padding-left: 50vw; }
+  .od-panel { flex: none; height: min(54svh, 62vw); aspect-ratio: 3 / 2; position: relative; }
+  .od-panel img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .od-panel::after { content: ""; position: absolute; inset: 0; background: rgba(23,17,12,var(--dim, .55)); transition: background .3s; }
+  .od-caps { position: relative; height: clamp(150px, 24svh, 200px); }
+  .od-cap { position: absolute; inset: 0; padding: 0 22px; text-align: center; opacity: 0; transition: opacity .35s, transform .35s; transform: translateY(12px); }
+  .od-cap.on { opacity: 1; transform: none; }
+  .od-cap .h { font: 600 clamp(26px, 6.4vw, 46px)/1.08 Fraunces, Georgia, serif; letter-spacing: -.02em; text-wrap: balance; max-width: 22ch; margin: 0 auto; }
+  .od-cap .h em { font-style: normal; color: var(--gold); }
+  .od-cap .l { margin: 12px auto 0; max-width: 40ch; font: 700 clamp(18px, 1.7vw, 22px)/1.35 Inter; color: rgba(242,230,210,.82); text-wrap: balance; }
+  .od-dots { display: flex; gap: 8px; justify-content: center; }
+  .od-dots i { width: 34px; height: 4px; border-radius: 4px; background: rgba(242,230,210,.2); }
+  .od-dots i.on { background: var(--gold); }
+
+  .outro { padding: 80px 22px 120px; text-align: center; background: var(--clay); color: var(--ink); }
+  .outro h3 { font: 600 clamp(32px, 8vw, 64px)/1.05 Fraunces, Georgia, serif; letter-spacing: -.025em; text-wrap: balance; max-width: 18ch; margin: 0 auto; }
+  .outro p { margin: 16px auto 0; max-width: 36ch; font: 700 clamp(18px, 1.7vw, 22px)/1.4 Inter; }
+</style>
+</head>
+<body>
+<p class="note">Mock A · Odyssey frieze · <a href="why-b.html">B</a> · <a href="why-c.html">C</a></p>
+
+<section class="intro">
+  <p class="kicker">Why Pauzie</p>
+  <h2>A 3,000-year-old trick<br>for a very modern problem.</h2>
+</section>
+
+<section class="od" id="od">
+  <div class="od-stage">
+    <div class="od-track" id="odTrack">
+      <div class="od-panel"><img src="assets/why/a1.webp" alt="Greek vase painting: Odysseus tied to the mast as Sirens hold up glowing phones."></div>
+      <div class="od-panel"><img src="assets/why/a2.webp" alt="The rowers with wax in their ears, Odysseus straining at the ropes."></div>
+      <div class="od-panel"><img src="assets/why/a3.webp" alt="A tiny Siren climbs out of a phone and cuts the rope."></div>
+      <div class="od-panel"><img src="assets/why/a4.webp" alt="A person works at a desk while Pauzie sits on a far shelf."></div>
+    </div>
+    <div class="od-caps">
+      <div class="od-cap"><p class="h">Odysseus knew the <em>Sirens' song</em> would sink his ship.</p><p class="l">Today the Sirens sing from your pocket. Reels, pings, "just one more".</p></div>
+      <div class="od-cap"><p class="h">So he tied himself to the mast <em>before</em> the song began.</p><p class="l">He didn't trust his willpower. He made the choice ahead of time.</p></div>
+      <div class="od-cap"><p class="h">App blockers tie you up, then <em>hand you the scissors.</em></p><p class="l">The unlock button lives inside the phone. One tap on "Ignore limit" and you're gone.</p></div>
+      <div class="od-cap"><p class="h">Pauzie puts the knot <em>across the room.</em></p><p class="l">To open a distracting app, you have to get up and go get it. Most of the time, you won't.</p></div>
+    </div>
+    <div class="od-dots" id="odDots"><i></i><i></i><i></i><i></i></div>
+  </div>
+</section>
+
+<section class="outro">
+  <h3>Psychologists call it a Ulysses contract.<br>We call it Pauzie.</h3>
+  <p>Distance does what willpower can't.</p>
+</section>
+
+<script>
+(() => {
+  const sec = document.getElementById('od'), track = document.getElementById('odTrack');
+  const panels = [...track.children], caps = [...document.querySelectorAll('.od-cap')], dots = [...document.getElementById('odDots').children];
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  function frame() {
+    const r = sec.getBoundingClientRect();
+    const p = clamp(-r.top / (r.height - innerHeight));
+    const pw = panels[0].offsetWidth, n = panels.length;
+    const f = p * (n - 1);                                   // 0..3, which panel is centred
+    track.style.transform = `translateX(${-(f * pw) - pw / 2}px)`;
+    const k = Math.round(f);
+    panels.forEach((el, i) => el.style.setProperty('--dim', Math.min(.6, Math.abs(i - f) * .6)));
+    caps.forEach((c, i) => c.classList.toggle('on', i === k));
+    dots.forEach((d, i) => d.classList.toggle('on', i <= k));
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
