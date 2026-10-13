@@ -31,9 +31,11 @@ PANELS = {
   'p4': "Whimsical: the Pauzie device stands upright on the desk like a tiny brave knight, wearing a small shining silver helmet "
         "with a plume and holding a little olive shield, bravely holding back a swarm of cute, mischievous cartoon creatures made of "
         "notification bubbles, red dots, hearts and play-button shapes. Behind the knight, Riya studies calmly and happily, unbothered.",
-  'p5': "Evening, same room, task clearly finished: laptop shows nothing, books stacked neatly, a finished notebook page. Riya, relaxed and proud, "
-        "taps her phone on the Pauzie device; her phone screen lights up warmly and a playful burst of small cartoon speech bubbles, "
-        "red notification dots and little hearts pops out of the phone like confetti. She grins at the phone. No animals anywhere.",
+  'p5': "Close, slightly low angle, same composition as the third reference image: Riya's hand presses her phone flat DOWN ONTO the top of "
+        "the Pauzie device lying on the desk, the phone clearly touching the device, a ring of warm light rippling out from the touch point. "
+        "The task is clearly finished: a closed notebook with a ribbon bookmark on a neat stack of closed books, laptop shut, evening window. "
+        "Riya's other hand is raised in a happy fist pump, big relieved grin. A playful burst of small cartoon speech bubbles, red dots and "
+        "little hearts springs up out of the phone screen like confetti. No animals anywhere.",
   'p6': "Funny and clear: in her home, Riya stands on tiptoe on a small wooden stool, reaching up to place the Pauzie device on top of a very "
         "tall steel almirah (Indian cupboard), far out of reach. Her phone lies face-down on the study desk below, already locked. "
         "Her mother in the doorway watches, amused, arms crossed. Playful sense of 'hide it so you can't cheat'. No animals anywhere.",
@@ -62,7 +64,8 @@ def edit(pid):
     bnd = '----pauzie' + os.urandom(6).hex()
     parts = [f'--{bnd}\r\nContent-Disposition: form-data; name="{k}"\r\n\r\n{v}\r\n'.encode()
              for k, v in (('model', 'gpt-image-2'), ('prompt', prompt), ('size', '1024x1536'), ('quality', 'medium'))]
-    for path in (os.path.join(OUT, 'p1.png'), DEVICE):
+    refs = [os.path.join(OUT, 'p1.png'), DEVICE] + ([os.path.join(OUT, 'p3.png')] if pid == 'p5' else [])
+    for path in refs:
         parts.append(f'--{bnd}\r\nContent-Disposition: form-data; name="image[]"; filename="{os.path.basename(path)}"\r\nContent-Type: image/png\r\n\r\n'.encode()
                      + open(path, 'rb').read() + b'\r\n')
     parts.append(f'--{bnd}--\r\n'.encode())

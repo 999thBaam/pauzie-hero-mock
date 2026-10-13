@@ -2,12 +2,12 @@
    section is on screen; tap right/left, swipe, arrows or keys to move; press and hold to pause. */
 (() => {
   const STEPS = [
-    { img: 'p1', chip: 'Step 1 · Admit it',      h: 'You want to get things done.',            l: 'Reel number 47 disagrees.' },
-    { img: 'p2', chip: 'Step 2 · Get Pauzie',    h: 'Bring home a bodyguard.',                 l: 'Small, cream, and very serious about its job.' },
-    { img: 'p3', chip: 'Step 3 · Tap',           h: 'Need deep focus? Tap your phone on Pauzie.', l: 'Your distracting apps lock. Instantly.' },
-    { img: 'p4', chip: 'Step 4 · It stands guard', h: 'Your knight in shining armour.',          l: 'Reels, pings, “just one more”? Not today.' },
-    { img: 'p5', chip: 'Step 5 · Tap again',     h: 'Work done? Tap again. Your apps are back.', l: 'Guilt-free. You earned it.' },
-    { img: 'p6', chip: 'Pro tip',                h: 'Tapped? Now hide Pauzie far away.',       l: 'Top of the almirah. Another room. Another country. The further it is, the harder it is to cheat.' },
+    { img: 'p1', chip: 'Step 1 · Admit it',          h: 'You want to get things done.',               l: 'Reel number 47 disagrees.' },
+    { img: 'p2', chip: 'Step 2 · Get Pauzie',        h: 'Bring home a bodyguard.',                    l: 'Small, cream, and very serious about its job.' },
+    { img: 'p3', chip: 'Step 3 · Tap',               h: 'Need deep focus? Tap your phone on Pauzie.', l: 'Your distracting apps lock. Instantly.' },
+    { img: 'p6', chip: 'Step 4 · Hide it',           h: 'Now hide Pauzie far away.',                  l: 'Top of the almirah. Another room. Another country. The further it is, the harder it is to cheat.' },
+    { img: 'p4', chip: 'Step 5 · It stands guard',   h: 'Your knight in shining armour.',             l: 'Reels, pings, “just one more”? Not today.' },
+    { img: 'p5', chip: 'Step 6 · Tap again',         h: 'Work done? Tap again. Your apps are back.',  l: 'Guilt-free. You earned it.' },
     { end: true },
   ];
   const DUR = 5200;
@@ -24,7 +24,7 @@
     c.innerHTML = s.end
       ? `<p class="sv-h">Your turn.</p><p class="sv-l">Tap to focus. Tap to come back.</p>
          <a class="sv-cta" href="#">Pre-order ₹1,999</a><button class="sv-again" type="button">Watch again</button>`
-      : `<img src="assets/story/${s.img}.webp?v=3" alt="" loading="${i < 2 ? 'eager' : 'lazy'}" draggable="false">
+      : `<img src="assets/story/${s.img}.webp?v=4" alt="" loading="${i < 2 ? 'eager' : 'lazy'}" draggable="false">
          <div class="sv-text"><span class="sv-chip">${s.chip}</span><p class="sv-h">${s.h}</p><p class="sv-l">${s.l}</p></div>`;
     track.appendChild(c);
     return c;
