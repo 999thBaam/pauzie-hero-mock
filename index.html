@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Pauzie — Hero Mock</title>
-<meta name="description" content="Pauzie Device hero mock: from doomscrolling to free, one tap.">
+<meta name="description" content="Pauzie Device hero mock: everyone hooked on their phones, one tap, everyone back.">
 <meta name="theme-color" content="#0b1020">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,52 +17,27 @@
 
 <section class="hero" id="hero">
   <div class="stage" id="stage">
-
-    <!-- ACT 1 · night -->
-    <div class="night layer">
-      <div class="stars" id="stars"></div>
-      <div class="moon"></div>
-      <div class="ground ground-night"></div>
-      <div class="crowd" id="crowd-night"></div>
-    </div>
-
-    <!-- ACT 4 · dawn (revealed by a circle from the device) -->
-    <div class="dawn layer" id="dawn">
-      <div class="sun"></div>
-      <div class="hills"><span></span><span></span></div>
-      <div class="birds" aria-hidden="true">
-        <svg viewBox="0 0 40 12"><path d="M1 8 Q6 1 11 7 Q16 1 21 8" /></svg>
-        <svg viewBox="0 0 40 12"><path d="M1 8 Q6 1 11 7 Q16 1 21 8" /></svg>
-        <svg viewBox="0 0 40 12"><path d="M1 8 Q6 1 11 7 Q16 1 21 8" /></svg>
-      </div>
-      <div class="ground ground-dawn"></div>
-      <div class="crowd" id="crowd-dawn"></div>
-    </div>
-
-    <canvas id="device" aria-label="Pauzie Device, rotating"></canvas>
-    <div class="badges" id="badges" aria-hidden="true"></div>
+    <div class="strips" id="strips"></div>
+    <div class="halo" id="halo"></div>
+    <canvas id="device" aria-label="Pauzie Device"></canvas>
     <div class="ripple" id="ripple" aria-hidden="true"><i></i><i></i><i></i></div>
 
     <div class="cap cap1" id="cap1">
-      <p class="eyebrow">11:47 pm · everyone, everywhere</p>
       <p class="big">96 pickups today.<br><em>4 h 12 m</em> of reels.</p>
     </div>
     <div class="cap cap2" id="cap2"><p class="big">One tap.</p></div>
     <div class="cap cap3" id="cap3">
-      <h1>Put distractions<br>out of reach.</h1>
+      <h1>Put distractions out of reach.</h1>
       <p class="sub">Tap Pauzie. Your apps go quiet. Tap again to come back.</p>
-      <a class="cta" href="#rest">Pre-order · ₹1,999</a>
     </div>
-
-    <div class="hint" id="hint">scroll<span></span></div>
   </div>
 </section>
 
 <section class="rest" id="rest">
   <p class="eyebrow">Mock ends here</p>
   <h2>The rest of the current site continues below.</h2>
-  <p>Hero mock only — device model is Pact v1 (cream body, pine P). People art: Open Peeps by Pablo Stanley (CC0).</p>
-  <p class="tiny">Tip: add <code>?p=0.2</code> to the URL to freeze a frame.</p>
+  <p>Hero mock only. Device = Pact v1 model. Scenes generated with gpt-image-2: each "after" picture is an edit of its "before" picture, so the people stay the same.</p>
+  <p class="tiny">Add <code>?p=0.4</code> to the URL to freeze a frame (0 to 1).</p>
 </section>
 
 <script type="importmap">
