@@ -31,10 +31,12 @@ PANELS = {
   'p4': "Whimsical: the Pauzie device stands upright on the desk like a tiny brave knight, wearing a small shining silver helmet "
         "with a plume and holding a little olive shield, bravely holding back a swarm of cute, mischievous cartoon creatures made of "
         "notification bubbles, red dots, hearts and play-button shapes. Behind the knight, Riya studies calmly and happily, unbothered.",
-  'p5': "Evening, same room. Riya stretches happily at the finished desk (books closed, a big check-mark-like tidy pile), tapping her "
-        "phone on the Pauzie device again. Walking back in through the open door in a neat polite little queue come the SAME cute mischievous creatures from before: round speech-bubble creatures, red notification-dot creatures, a heart creature and a play-button creature (NOT animals), one of them waving hello.",
-  'p6': "Funny: the Pauzie device sits alone on top of a snowy Swiss mountain peak far away, wearing a tiny woolly scarf, next to a "
-        "small flag pole with a blank flag. In a round inset bubble in the corner, Riya in her room back home laughs and waves goodbye.",
+  'p5': "Evening, same room, task clearly finished: laptop shows nothing, books stacked neatly, a finished notebook page. Riya, relaxed and proud, "
+        "taps her phone on the Pauzie device; her phone screen lights up warmly and a playful burst of small cartoon speech bubbles, "
+        "red notification dots and little hearts pops out of the phone like confetti. She grins at the phone. No animals anywhere.",
+  'p6': "Funny and clear: in her home, Riya stands on tiptoe on a small wooden stool, reaching up to place the Pauzie device on top of a very "
+        "tall steel almirah (Indian cupboard), far out of reach. Her phone lies face-down on the study desk below, already locked. "
+        "Her mother in the doorway watches, amused, arms crossed. Playful sense of 'hide it so you can't cheat'. No animals anywhere.",
 }
 
 def post(url, body, ctype):

@@ -7,7 +7,7 @@
     { img: 'p3', chip: 'Step 3 · Tap',           h: 'Need deep focus? Tap your phone on Pauzie.', l: 'Your distracting apps lock. Instantly.' },
     { img: 'p4', chip: 'Step 4 · It stands guard', h: 'Your knight in shining armour.',          l: 'Reels, pings, “just one more”? Not today.' },
     { img: 'p5', chip: 'Step 5 · Tap again',     h: 'Work done? Tap again. Your apps are back.', l: 'Guilt-free. You earned it.' },
-    { img: 'p6', chip: 'Pro tip',                h: 'Keep Pauzie far away.',                   l: 'Another room works. Another country works even better.' },
+    { img: 'p6', chip: 'Pro tip',                h: 'Tapped? Now hide Pauzie far away.',       l: 'Top of the almirah. Another room. Another country. The further it is, the harder it is to cheat.' },
     { end: true },
   ];
   const DUR = 5200;
