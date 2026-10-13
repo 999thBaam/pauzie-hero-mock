@@ -6,20 +6,11 @@
 <title>Pauzie — Hero Mock</title>
 <meta name="description" content="Pauzie Device hero mock: train your focus, own your time.">
 <meta name="theme-color" content="#0b1020">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<script>
-// font trial: ?font=1..4 (remove once picked)
-(function(){var F={1:['Bricolage+Grotesque:opsz,wght@12..96,800','Bricolage Grotesque',800,''],2:['Anton','Anton',400,''],3:['Archivo:wdth,wght@125,900','Archivo',900,'font-stretch:125%;'],4:['Inter+Tight:wght@800','Inter Tight',800,'']};
-var f=F[new URLSearchParams(location.search).get('font')];if(!f)return;
-document.write('<link href="https://fonts.googleapis.com/css2?family='+f[0]+'&display=swap" rel="stylesheet"><style>.big,h1,.rest h2,.bar .logo{font-family:"'+f[1]+'",sans-serif!important;font-weight:'+f[2]+'!important;letter-spacing:-.01em;'+f[3]+'}</style>');})();
-</script>
 </head>
 <body>
 
-<header class="bar" id="bar"><a class="logo" href="#">Pauzie</a><a class="pre" href="#rest">Pre-order ₹1,999</a></header>
+<header class="bar" id="bar"><a class="logo" href="#" aria-label="Pauzie"><img class="lt" src="assets/logo/pauzie-logo-light.svg" alt=""><img class="dk" src="assets/logo/pauzie-logo-dark.svg" alt=""></a><a class="pre" href="#rest">Pre-order ₹1,999</a></header>
 
 <section class="hero" id="hero">
   <div class="stage" id="stage">
@@ -29,7 +20,7 @@ document.write('<link href="https://fonts.googleapis.com/css2?family='+f[0]+'&di
     <div class="ripple" id="ripple" aria-hidden="true"><i></i><i></i><i></i></div>
 
     <div class="cap cap1" id="cap1">
-      <p class="big">Gym for your body.<br><em>Pauzie for your mind.</em></p>
+      <p class="big">Gym for your body.<br><em><img class="inlogo" src="assets/logo/pauzie-logo-light.svg" alt="Pauzie"> for your mind.</em></p>
     </div>
     <div class="cap cap2" id="cap2"><p class="big">Tap once.</p></div>
     <div class="cap cap3" id="cap3">

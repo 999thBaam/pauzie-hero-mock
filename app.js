@@ -155,6 +155,7 @@ function frame() {
   halo.style.setProperty('--halo', `rgba(${mix([8, 11, 24], [255, 236, 205], day)},${lerp(.92, .55, day)})`);
   halo.style.setProperty('--halo-mid', `rgba(${mix([8, 11, 24], [255, 236, 205], day)},${lerp(.55, .25, day)})`);
   const isDay = day > .5;
+  bar.classList.toggle('day', isDay);
   meta.content = isDay ? '#f2f0ea' : '#0b1020';
   bar.style.setProperty('--bar-fg', isDay ? '#3F4021' : '#e9ecff');
   bar.style.setProperty('--bar-btn-bg', isDay ? '#3F4021' : '#F2F0EA');
