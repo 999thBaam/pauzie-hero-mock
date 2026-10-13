@@ -35,9 +35,9 @@ body { overflow-x: hidden; }
 
 /* ---------- captions ---------- */
 .cap { position: absolute; z-index: 4; left: 0; right: 0; top: calc(max(14px, env(safe-area-inset-top)) + 54px); padding: 0 22px; text-align: center; pointer-events: none; }
-.big { font: 600 clamp(26px, 7.2vw, 46px)/1.1 Fraunces, Georgia, serif; letter-spacing: -.01em; text-shadow: 0 2px 18px rgba(0,0,0,.5); }
+.big { font: 700 clamp(32px, 8.6vw, 56px)/1.08 Fraunces, Georgia, serif; letter-spacing: -.01em; text-shadow: 0 2px 18px rgba(0,0,0,.5); }
 .big em { font-style: normal; color: #ffd29a; }
-h1 { font: 700 clamp(30px, 8.4vw, 56px)/1.04 Fraunces, Georgia, serif; letter-spacing: -.02em; color: var(--pine); max-width: 14ch; margin: 0 auto; }
+h1 { font: 800 clamp(40px, 11vw, 72px)/1.02 Fraunces, Georgia, serif; letter-spacing: -.02em; color: var(--pine); max-width: 14ch; margin: 0 auto; }
 .sub { margin: 10px auto 0; max-width: 34ch; font-size: 15px; line-height: 1.45; color: var(--pine); opacity: .8; text-wrap: balance; }
 
 /* ---------- top bar ---------- */
