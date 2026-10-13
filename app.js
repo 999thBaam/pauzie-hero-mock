@@ -167,6 +167,7 @@ function frame() {
   cap3.style.opacity = seg(p, .72, .86);
   cap3.style.transform = `translateY(${(1 - seg(p, .72, .86)) * 18}px)`;
   cap4.style.opacity = seg(p, .78, .92);
+  cap4.style.pointerEvents = p > .85 ? 'auto' : 'none';
 
   if (ready) {
     const idle = reduce ? 0 : t;
