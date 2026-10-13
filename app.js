@@ -110,7 +110,7 @@ function readScroll() {
 addEventListener('scroll', readScroll, { passive: true });
 
 // ---------- frame ----------
-const cap1 = $('cap1'), cap2 = $('cap2'), cap3 = $('cap3'), bar = $('bar'), halo = $('halo');
+const cap1 = $('cap1'), cap2 = $('cap2'), cap3 = $('cap3'), cap4 = $('cap4'), bar = $('bar'), halo = $('halo');
 const rings = [...$('ripple').children];
 const meta = document.querySelector('meta[name=theme-color]');
 const NIGHT_BG = [11, 16, 32], DAY_BG = [242, 240, 234];
@@ -166,6 +166,7 @@ function frame() {
   cap2.style.opacity = seg(p, .3, .4) * (1 - seg(p, .56, .62));
   cap3.style.opacity = seg(p, .72, .86);
   cap3.style.transform = `translateY(${(1 - seg(p, .72, .86)) * 18}px)`;
+  cap4.style.opacity = seg(p, .78, .92);
 
   if (ready) {
     const idle = reduce ? 0 : t;
