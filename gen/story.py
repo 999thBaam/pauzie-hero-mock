@@ -36,6 +36,11 @@ PANELS = {
         "The task is clearly finished: a closed notebook with a ribbon bookmark on a neat stack of closed books, laptop shut, evening window. "
         "Riya's other hand is raised in a happy fist pump, big relieved grin. A playful burst of small cartoon speech bubbles, red dots and "
         "little hearts springs up out of the phone screen like confetti. No animals anywhere.",
+  'k1': "Riya lies on her bed at night scrolling her phone happily-guiltily; on the phone's back hangs a big brass padlock that is OPEN, "
+        "with its key still stuck in the lock and dangling, clearly showing the lock is useless because the key is right there. The padlock and key are BIG and obvious, close to the viewer. No other gadgets, no device, no puck anywhere in the picture. Funny and clear.",
+  'k2': "Riya studies calmly at her desk in morning light; her phone lies face-down on the desk with a big brass padlock CLOSED on it and no key. "
+        "Far across the room, high on top of a tall almirah, sits the Pauzie device, glowing softly, with a little brass key tag hanging from it "
+        "like a keychain, showing that Pauzie is the key and it is far away.",
   'p6': "Funny and clear: in her home, Riya stands on tiptoe on a small wooden stool, reaching up to place the Pauzie device on top of a very "
         "tall steel almirah (Indian cupboard), far out of reach. Her phone lies face-down on the study desk below, already locked. "
         "Her mother in the doorway watches, amused, arms crossed. Playful sense of 'hide it so you can't cheat'. No animals anywhere.",
@@ -60,11 +65,11 @@ def gen(pid):
 
 def edit(pid):
     prompt = (f"Use the first reference image ONLY for the heroine's look (same face, hair, glasses, clothes) and the illustration style. "
-              f"{STYLE} {HEROINE} {DEVICE_D} New scene: {PANELS[pid]}")
+              f"{STYLE} {HEROINE} {'' if pid == 'k1' else DEVICE_D} New scene: {PANELS[pid]}")
     bnd = '----pauzie' + os.urandom(6).hex()
     parts = [f'--{bnd}\r\nContent-Disposition: form-data; name="{k}"\r\n\r\n{v}\r\n'.encode()
              for k, v in (('model', 'gpt-image-2'), ('prompt', prompt), ('size', '1024x1536'), ('quality', 'medium'))]
-    refs = [os.path.join(OUT, 'p1.png'), DEVICE] + ([os.path.join(OUT, 'p3.png')] if pid == 'p5' else [])
+    refs = [os.path.join(OUT, 'p1.png')] + ([] if pid == 'k1' else [DEVICE]) + ([os.path.join(OUT, 'p3.png')] if pid == 'p5' else [])
     for path in refs:
         parts.append(f'--{bnd}\r\nContent-Disposition: form-data; name="image[]"; filename="{os.path.basename(path)}"\r\nContent-Type: image/png\r\n\r\n'.encode()
                      + open(path, 'rb').read() + b'\r\n')

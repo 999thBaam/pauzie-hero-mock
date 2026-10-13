@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Why Pauzie — F: Lock and key</title>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap">
+<style>
+  :root { --ink: #181818; --pine: #3F4021; --beige: #f5f0ec; --red: #c2412b; --grey: #4d4d4d; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #fff; color: var(--ink); font-family: Switzer, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
+  .note { padding: 16px 20px; font: 600 16px/1.4 Switzer, sans-serif; background: var(--ink); color: #fff; text-align: center; }
+  .note a { color: inherit; }
+  .pad { height: 50vh; display: grid; place-items: center; color: #aaa; font: 600 16px Switzer; }
+
+  .lk { padding: 80px 16px 88px; text-align: center; }
+  .lk h2 { font: 500 clamp(34px, 8.8vw, 68px)/1.04 Switzer, sans-serif; letter-spacing: -.035em; max-width: 15ch; margin: 0 auto; text-wrap: balance; }
+  .lk .sub { margin: 16px auto 0; max-width: 30ch; font: 600 clamp(19px, 2vw, 24px)/1.35 Switzer; color: var(--grey); text-wrap: balance; }
+
+  .pair { margin: 40px auto 0; max-width: 900px; display: grid; gap: 16px; }
+  @media (min-width: 760px) { .pair { grid-template-columns: 1fr 1fr; gap: 24px; } }
+  .side { border-radius: 26px; overflow: hidden; background: var(--beige); text-align: left; display: flex; flex-direction: column; }
+  .side img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; display: block; }
+  .side .txt { padding: 20px 22px 24px; }
+  .tag { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 99px; font: 700 clamp(16px, 1.5vw, 18px)/1 Switzer; }
+  .bad .tag { background: #fbe3dd; color: var(--red); }
+  .good .tag { background: var(--pine); color: #fff; }
+  .side h3 { margin-top: 14px; font: 600 clamp(26px, 3vw, 34px)/1.1 Switzer; letter-spacing: -.025em; }
+  .side p { margin-top: 10px; font: 500 clamp(18px, 1.7vw, 20px)/1.45 Switzer; color: var(--grey); }
+  .good { background: #eef0e4; }
+
+  .end { margin: 44px auto 0; max-width: 22ch; font: 600 clamp(28px, 5.6vw, 46px)/1.1 Switzer; letter-spacing: -.03em; text-wrap: balance; }
+</style>
+</head>
+<body>
+<p class="note"><a href="why-e.html">E</a> · Mock F · Lock and key</p>
+<div class="pad">… How it works story above …</div>
+
+<section class="lk">
+  <h2>A lock is useless if the key hangs on it.</h2>
+  <p class="sub">That's why app blockers fail.</p>
+
+  <div class="pair">
+    <article class="side bad">
+      <img src="assets/why/k1.webp" alt="Riya scrolling at night. A padlock hangs on her phone with the key still in it.">
+      <div class="txt">
+        <span class="tag">✕ Other app blockers</span>
+        <h3>The key is on your phone.</h3>
+        <p>The lock and the key live on the same phone. When the urge hits, one tap and you're back on reels.</p>
+      </div>
+    </article>
+    <article class="side good">
+      <img src="assets/why/k2.webp" alt="Riya studying. Her phone is locked on the desk and Pauzie, the key, sits on top of the almirah across the room.">
+      <div class="txt">
+        <span class="tag">✓ Pauzie</span>
+        <h3>Pauzie is the key. Keep it far away.</h3>
+        <p>Your apps unlock only when you tap Pauzie. Keep it in another room, and you'll have to get up to cheat. Most of the time, you won't.</p>
+      </div>
+    </article>
+  </div>
+
+  <p class="end">Same phone. The key just lives somewhere else.</p>
+</section>
+
+<div class="pad">… rest of the page …</div>
+</body>
+</html>
