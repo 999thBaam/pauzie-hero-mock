@@ -1,0 +1,48 @@
+/* How-it-works as an Instagram-style story: one heroine, 6 cards + a CTA card. Driven by story.js. */
+.story { --st-cream: #F2F0EA; --st-pine: #3F4021; --st-grey: #575849;
+  background: var(--st-cream); color: var(--st-pine); padding: 72px 0 64px; text-align: center; overflow: hidden; }
+.story-kicker { font: 700 13px/1 Inter, system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--st-grey); margin-bottom: 14px; }
+.story h2 { font: 600 clamp(32px, 8.4vw, 60px)/1.05 Fraunces, Georgia, serif; letter-spacing: -.025em; margin: 0 auto 28px; padding: 0 22px; text-wrap: balance; }
+
+.sv { --ch: min(70svh, 82vw * 1.5, 740px); --cw: calc(var(--ch) / 1.5); --gap: 14px;
+  position: relative; height: calc(var(--ch) + 22px); outline: none; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.sv-track { position: absolute; inset: 22px 0 0; }
+.sv-card { position: absolute; top: 0; left: 50%; width: var(--cw); height: var(--ch); margin-left: calc(var(--cw) / -2);
+  border-radius: 22px; overflow: hidden; background: #e8e2d6; box-shadow: 0 18px 40px -18px rgba(40,40,20,.45);
+  cursor: pointer; }
+.sv.is-ready .sv-card { transition: transform .55s cubic-bezier(.2,.7,.2,1), opacity .4s ease, filter .4s ease; }
+.sv-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+.sv-card.is-cur { cursor: default; }
+.sv-card:not(.is-cur) { filter: saturate(.7); }
+
+/* words on the card: calm top area of each picture */
+.sv-text { position: absolute; left: 0; right: 0; top: 0; padding: 22px 20px 44px; text-align: left;
+  background: linear-gradient(rgba(242,240,234,.96) 0%, rgba(242,240,234,.9) 62%, rgba(242,240,234,0) 100%); }
+.sv-chip { display: inline-block; padding: 7px 11px; border-radius: 99px; background: var(--st-pine); color: var(--st-cream);
+  font: 700 12px/1 Inter, system-ui, sans-serif; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 12px; }
+.sv-h { font: 600 clamp(25px, calc(var(--cw) * .085), 34px)/1.08 Fraunces, Georgia, serif; letter-spacing: -.02em; color: var(--st-pine); text-wrap: balance; }
+.sv-l { margin-top: 8px; font: 700 clamp(15px, calc(var(--cw) * .045), 18px)/1.35 Inter, system-ui, sans-serif; color: var(--st-grey); text-wrap: balance; }
+
+/* last card: the ask */
+.sv-card.sv-end { background: var(--st-pine); color: var(--st-cream); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; padding: 28px; text-align: center; }
+.sv-end .sv-h { color: var(--st-cream); font-size: clamp(34px, calc(var(--cw) * .13), 52px); }
+.sv-end .sv-l { color: rgba(242,240,234,.82); margin: 0; }
+.sv-cta { display: inline-flex; align-items: center; justify-content: center; height: 52px; padding: 0 28px; border-radius: 99px; background: var(--st-cream); color: var(--st-pine); font: 600 16px/1 Inter, system-ui, sans-serif; text-decoration: none; }
+.sv-again { background: none; border: 0; color: var(--st-cream); font: 700 15px/1 Inter, system-ui, sans-serif; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; padding: 8px; }
+
+/* progress bars above the current card */
+.sv-bars { position: absolute; top: 0; left: 50%; width: var(--cw); transform: translateX(-50%); display: flex; gap: 5px; }
+.sv-bars i { flex: 1; height: 4px; border-radius: 4px; background: rgba(63,64,33,.18); overflow: hidden; }
+.sv-bars i b { display: block; height: 100%; width: calc(var(--f, 0) * 100%); background: var(--st-pine); border-radius: inherit; }
+
+.sv-nav { position: absolute; top: calc(50% + 11px); z-index: 20; width: 52px; height: 52px; margin-top: -26px; border-radius: 50%; border: 0;
+  background: var(--st-pine); color: var(--st-cream); font: 400 30px/1 Georgia, serif; cursor: pointer; display: none; box-shadow: 0 8px 20px -8px rgba(0,0,0,.4); }
+.sv-prev { left: calc(50% - var(--cw) / 2 - 76px); }
+.sv-next { left: calc(50% + var(--cw) / 2 + 24px); }
+.sv-nav[disabled] { opacity: .25; cursor: default; }
+@media (hover: hover) and (min-width: 760px) { .sv-nav { display: block; } }
+
+.story-hint { margin-top: 18px; font: 700 15px/1 Inter, system-ui, sans-serif; color: var(--st-grey); transition: opacity .4s; }
+.story-hint.is-gone { opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) { .sv-card { transition: none; } }

@@ -1,0 +1,75 @@
+"""How-it-works story panels (portrait 1024x1536), one heroine across all panels.
+usage: python3 story.py p1            -> generate panel 1 (sets the character)
+       python3 story.py p2 p3 ...     -> edits: panel 1 (character) + device render as references
+Writes ../assets/story/raw/<id>.png
+"""
+import base64, json, os, sys, urllib.request, concurrent.futures as cf
+
+KEY = next(l.split('=', 1)[1].strip().strip('"') for l in open(os.path.expanduser('~/.config/voicebench/keys.env')) if l.startswith('OPENAI_API_KEY='))
+HERE = os.path.dirname(__file__)
+OUT = os.path.join(HERE, '..', 'assets', 'story', 'raw')
+DEVICE = os.path.expanduser('~/Desktop/pact-device-v1/r-pact-3q.png')
+os.makedirs(OUT, exist_ok=True)
+
+STYLE = ("Flat editorial illustration with subtle grain texture, simple rounded shapes, clean confident linework, playful and a little "
+         "cartoonish, warm palette of cream, peach, sage green and dark pine green. Tall portrait composition with the main action in the "
+         "middle and lower two thirds; keep the top quarter calm and simple (plain wall or sky) because text will sit there. "
+         "No text, no letters, no numbers, no logos, no app icons, no UI, no watermark.")
+HEROINE = ("The heroine: Riya, a 22-year-old Indian woman, shoulder-length wavy black hair, small round glasses, mustard kurta "
+           "over light jeans, expressive face.")
+DEVICE_D = ("The Pauzie device: a small cream-white rounded-square puck about the size of a coaster, thick and soft-edged, with a "
+            "dark olive capybara-shaped letter P and a small olive dot on its top face, exactly like the object in the second reference image.")
+
+PANELS = {
+  'p1': "Late night in her small bedroom. Riya sits at a study desk piled with open books and a laptop, but she is slumped, thumb "
+        "scrolling her phone, face lit blue by the screen, a wall clock showing it is very late, a half-drunk cup of chai gone cold. "
+        "Funny, relatable guilt: one eyebrow raised at herself.",
+  'p2': "Daytime, same bedroom. Riya kneels on the floor opening a small delivery box; inside sits the Pauzie device on paper "
+        "padding, giving off a soft warm glow like treasure. She looks delighted and curious.",
+  'p3': "Same desk in bright morning light. Close, low angle: Riya's hand taps her phone onto the Pauzie device lying on the desk; "
+        "a small ring of warm light ripples out from the touch. Riya's determined smiling face in the background.",
+  'p4': "Whimsical: the Pauzie device stands upright on the desk like a tiny brave knight, wearing a small shining silver helmet "
+        "with a plume and holding a little olive shield, bravely holding back a swarm of cute, mischievous cartoon creatures made of "
+        "notification bubbles, red dots, hearts and play-button shapes. Behind the knight, Riya studies calmly and happily, unbothered.",
+  'p5': "Evening, same room. Riya stretches happily at the finished desk (books closed, a big check-mark-like tidy pile), tapping her "
+        "phone on the Pauzie device again. Walking back in through the open door in a neat polite little queue come the SAME cute mischievous creatures from before: round speech-bubble creatures, red notification-dot creatures, a heart creature and a play-button creature (NOT animals), one of them waving hello.",
+  'p6': "Funny: the Pauzie device sits alone on top of a snowy Swiss mountain peak far away, wearing a tiny woolly scarf, next to a "
+        "small flag pole with a blank flag. In a round inset bubble in the corner, Riya in her room back home laughs and waves goodbye.",
+}
+
+def post(url, body, ctype):
+    req = urllib.request.Request(url, data=body, headers={"Authorization": f"Bearer {KEY}", "Content-Type": ctype})
+    try:
+        with urllib.request.urlopen(req, timeout=400) as r:
+            return json.load(r), None
+    except urllib.error.HTTPError as e:
+        return None, 'HTTP %s %s' % (e.code, e.read()[:300])
+
+def gen(pid):
+    prompt = f"{STYLE} {HEROINE} Scene: {PANELS[pid]}"
+    d, err = post("https://api.openai.com/v1/images/generations",
+                  json.dumps({"model": "gpt-image-2", "prompt": prompt, "size": "1024x1536", "quality": "medium", "n": 1}).encode(),
+                  "application/json")
+    if err: return pid, err
+    open(os.path.join(OUT, pid + '.png'), 'wb').write(base64.b64decode(d['data'][0]['b64_json']))
+    return pid, 'ok'
+
+def edit(pid):
+    prompt = (f"Use the first reference image ONLY for the heroine's look (same face, hair, glasses, clothes) and the illustration style. "
+              f"{STYLE} {HEROINE} {DEVICE_D} New scene: {PANELS[pid]}")
+    bnd = '----pauzie' + os.urandom(6).hex()
+    parts = [f'--{bnd}\r\nContent-Disposition: form-data; name="{k}"\r\n\r\n{v}\r\n'.encode()
+             for k, v in (('model', 'gpt-image-2'), ('prompt', prompt), ('size', '1024x1536'), ('quality', 'medium'))]
+    for path in (os.path.join(OUT, 'p1.png'), DEVICE):
+        parts.append(f'--{bnd}\r\nContent-Disposition: form-data; name="image[]"; filename="{os.path.basename(path)}"\r\nContent-Type: image/png\r\n\r\n'.encode()
+                     + open(path, 'rb').read() + b'\r\n')
+    parts.append(f'--{bnd}--\r\n'.encode())
+    d, err = post("https://api.openai.com/v1/images/edits", b''.join(parts), f"multipart/form-data; boundary={bnd}")
+    if err: return pid, err
+    open(os.path.join(OUT, pid + '.png'), 'wb').write(base64.b64decode(d['data'][0]['b64_json']))
+    return pid, 'ok'
+
+ids = sys.argv[1:]
+with cf.ThreadPoolExecutor(5) as ex:
+    for pid, st in ex.map(lambda i: gen(i) if i == 'p1' else edit(i), ids):
+        print(pid, st, flush=True)
