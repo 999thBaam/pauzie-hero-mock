@@ -28,6 +28,12 @@
   .side h3 { margin-top: 14px; font: 600 clamp(26px, 3vw, 34px)/1.1 Switzer; letter-spacing: -.025em; }
   .side p { margin-top: 10px; font: 500 clamp(18px, 1.7vw, 20px)/1.45 Switzer; color: var(--grey); }
   .good { background: #eef0e4; }
+  .pic { position: relative; container-type: inline-size; }
+  /* magnifier on the far shelf: Pauzie with the key, in the other room */
+  .zoom { position: absolute; left: 6cqw; top: 5cqw; width: 38cqw; height: 38cqw; border-radius: 50%; border: 5px solid #fff;
+    box-shadow: 0 12px 28px -10px rgba(0,0,0,.45); background: url(assets/why/k2.webp?v=2) no-repeat;
+    background-size: 300cqw 450cqw; background-position: calc(19cqw - 212.4cqw) calc(19cqw - 96.75cqw); }
+  .zoom::after { content: ""; position: absolute; left: 100%; top: 62%; width: 22cqw; height: 3px; background: #fff; transform-origin: left; transform: rotate(8deg); border-radius: 3px; }
 
   .end { margin: 44px auto 0; max-width: 22ch; font: 600 clamp(28px, 5.6vw, 46px)/1.1 Switzer; letter-spacing: -.03em; text-wrap: balance; }
 </style>
@@ -42,19 +48,17 @@
 
   <div class="pair">
     <article class="side bad">
-      <img src="assets/why/k1.webp" alt="Riya scrolling at night. A padlock hangs on her phone with the key still in it.">
+      <img src="assets/why/k1.webp?v=2" alt="Riya scrolling at night. A padlock hangs on her phone with the key still in it.">
       <div class="txt">
         <span class="tag">✕ Other app blockers</span>
         <h3>The key is on your phone.</h3>
-        <p>The lock and the key live on the same phone. When the urge hits, one tap and you're back on reels.</p>
       </div>
     </article>
     <article class="side good">
-      <img src="assets/why/k2.webp" alt="Riya studying. Her phone is locked on the desk and Pauzie, the key, sits on top of the almirah across the room.">
+      <div class="pic"><img src="assets/why/k2.webp?v=2" alt="Riya studies with her phone padlocked on the desk. Far away in another room, Pauzie hangs with the key on a shelf."><span class="zoom" aria-hidden="true"></span></div>
       <div class="txt">
         <span class="tag">✓ Pauzie</span>
         <h3>Pauzie is the key. Keep it far away.</h3>
-        <p>Your apps unlock only when you tap Pauzie. Keep it in another room, and you'll have to get up to cheat. Most of the time, you won't.</p>
       </div>
     </article>
   </div>

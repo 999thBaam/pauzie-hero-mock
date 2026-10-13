@@ -36,11 +36,16 @@ PANELS = {
         "The task is clearly finished: a closed notebook with a ribbon bookmark on a neat stack of closed books, laptop shut, evening window. "
         "Riya's other hand is raised in a happy fist pump, big relieved grin. A playful burst of small cartoon speech bubbles, red dots and "
         "little hearts springs up out of the phone screen like confetti. No animals anywhere.",
-  'k1': "Riya lies on her bed at night scrolling her phone happily-guiltily; on the phone's back hangs a big brass padlock that is OPEN, "
-        "with its key still stuck in the lock and dangling, clearly showing the lock is useless because the key is right there. The padlock and key are BIG and obvious, close to the viewer. No other gadgets, no device, no puck anywhere in the picture. Funny and clear.",
-  'k2': "Riya studies calmly at her desk in morning light; her phone lies face-down on the desk with a big brass padlock CLOSED on it and no key. "
-        "Far across the room, high on top of a tall almirah, sits the Pauzie device, glowing softly, with a little brass key tag hanging from it "
-        "like a keychain, showing that Pauzie is the key and it is far away.",
+  'k1': "Close-up, low angle, the phone and padlock fill the lower half of the frame. Riya, lying on her bed at night, holds her glowing phone; "
+        "a BIG brass padlock is clamped over the phone, and her own fingers are TURNING THE KEY that is stuck in it, the shackle popping open. "
+        "Out of the phone screen burst playful cartoon reels, hearts, play buttons and red notification dots, pulling her in. Her face: a guilty, "
+        "sheepish grin. The message must be obvious without words: the key is right on the lock, so she unlocks it herself in one second. "
+        "No other gadgets, no device, no puck anywhere in the picture.",
+  'k2': "Deep perspective composition showing DISTANCE. Foreground: Riya at her study desk, calm and focused, writing; her phone lies on the desk "
+        "with a BIG brass padlock firmly CLOSED around it, no key anywhere near. Background: through an open doorway, down a long hallway, in ANOTHER "
+        "ROOM far away, the Pauzie device sits high on a shelf with a big brass key hanging from it like a keychain, softly glowing. A faint dotted "
+        "path on the floor leads from her chair, through the doorway, all the way to the far shelf. The cartoon reels and notification creatures sit "
+        "outside the closed padlock, bored and sulking. The message must be obvious without words: the key is far away, so the phone stays locked.",
   'p6': "Funny and clear: in her home, Riya stands on tiptoe on a small wooden stool, reaching up to place the Pauzie device on top of a very "
         "tall steel almirah (Indian cupboard), far out of reach. Her phone lies face-down on the study desk below, already locked. "
         "Her mother in the doorway watches, amused, arms crossed. Playful sense of 'hide it so you can't cheat'. No animals anywhere.",
