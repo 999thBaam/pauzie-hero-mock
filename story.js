@@ -24,7 +24,7 @@
     c.innerHTML = s.end
       ? `<p class="sv-h">Your turn.</p><p class="sv-l">Tap to focus. Tap to come back.</p>
          <a class="sv-cta" href="#">Pre-order ₹1,999</a><button class="sv-again" type="button">Watch again</button>`
-      : `<img src="assets/story/${s.img}.webp?v=2" alt="" loading="${i < 2 ? 'eager' : 'lazy'}" draggable="false">
+      : `<img src="assets/story/${s.img}.webp?v=3" alt="" loading="${i < 2 ? 'eager' : 'lazy'}" draggable="false">
          <div class="sv-text"><span class="sv-chip">${s.chip}</span><p class="sv-h">${s.h}</p><p class="sv-l">${s.l}</p></div>`;
     track.appendChild(c);
     return c;
